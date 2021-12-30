@@ -8,8 +8,8 @@ Meteor.startup(() => {
   if (Scenes.find().count() === 0) {
     Scenes.insert({
       key: 0,
-      video1Url: googleDriveIdToUrl("1BUT5eUPGtyTmiz1ZqWjfKI7xKGHGUEUF"),
-      video2Url: googleDriveIdToUrl("12UBQm1nXeHLT2sClSJUjJ9qLql6czE2V")
+      video1Url: googleDriveIdToUrl("cui_synch_test_1_computer_smaller.mp4"),
+      video2Url: googleDriveIdToUrl("cui_synch_test_1_telephone_smaller.mp4")
     });
 
   }

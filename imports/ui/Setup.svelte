@@ -1,20 +1,20 @@
 
 <script>
   import { 
-    getGoogleDriveIdFromUrl,
-    googleDriveIdToUrl
+    getCloudCmdIdFromUrl,
+    cloudCmdIdToUrl
   } from '../lib/helpers.js'
 
   export let scene
 
-  let video1Id = getGoogleDriveIdFromUrl(scene.video1Url)
-  let video2Id = getGoogleDriveIdFromUrl(scene.video2Url)
+  let video1Id = getCloudCmdIdFromUrl(scene.video1Url)
+  let video2Id = getCloudCmdIdFromUrl(scene.video2Url)
 
   function handleSubmit(event) {
       Meteor.call("scenes.update", {
         ...scene,
-        video1Url: googleDriveIdToUrl(video1Id),
-        video2Url: googleDriveIdToUrl(video2Id)
+        video1Url: cloudCmdIdToUrl(video1Id),
+        video2Url: cloudCmdIdToUrl(video2Id)
       });
   };  
 
@@ -29,35 +29,36 @@
 
     <form on:submit|preventDefault={handleSubmit}>
       <label>
-        Video Computer (Google Drive Id):
-        <input type="text" bind:value={video1Id} placeholder="1BUT5eUPGtyTmiz1ZqWjfKI7xKGHGUEUF">
+        Video Computer (URL):
+        <input type="text" bind:value={video1Id} placeholder="cui_synch_test_1_computer_smaller.mp4">
         <br />
         {#if video1Id}
             <video controls>
-                <source src={googleDriveIdToUrl(video1Id)} type='video/mp4'>
+                <source src={cloudCmdIdToUrl(video1Id)} type='video/mp4'>
             </video>
         {/if}
       </label>
       <br />
       <label>
         Video Phone (Google Drive Id):
-        <input type="text" bind:value={video2Id} placeholder="12UBQm1nXeHLT2sClSJUjJ9qLql6czE2V">
+        <input type="text" bind:value={video2Id} placeholder="cui_synch_test_1_computer_smaller.mp4">
         <br />
         {#if video2Id}
-            <video controls>
-                <source src={googleDriveIdToUrl(video2Id)} type='video/mp4'>
-            </video>
+          <video controls>
+              <source src={cloudCmdIdToUrl(video2Id)} type='video/mp4'>
+          </video>
         {/if}
       </label>
       <br />
-      <button disabled={!scene || scene.video1Url==googleDriveIdToUrl(video1Id) && scene.video2Url==googleDriveIdToUrl(video2Id)} type="submit">Save</button>
+      <button disabled={!scene || scene.video1Url==cloudCmdIdToUrl(video1Id) && scene.video2Url==cloudCmdIdToUrl(video2Id)} type="submit">Save</button>
     </form>
 
     <pre>
-      How to get Google Drive ID:
-      - open video in google drive
-      - three dots: open in new window
-      - copy the id from the url, e.g. https://drive.google.com/file/d/12UBQm1nXeHLT2sClSJUjJ9qLql6czE2V/view
+      How to setup videos:
+      1. upload to https://media.intergestalt.dev/ into folder "coreo"
+      2. make sure that there are no whitespaces in the name (right click -> rename)!
+      3. enter the file name into filed above, e.g.: cui_synch_test_1_computer_smaller.mp4
+      4. save (reload to check)
     </pre>
 
     
@@ -68,5 +69,8 @@
   video {
     width: 20%;
     min-width: 300px;
+  }
+  input {
+    min-width: 50%;
   }
 </style>
