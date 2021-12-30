@@ -56,7 +56,7 @@
 {/if}
 
 
-<video bind:paused={session.paused}>
+<video playsinline bind:paused={session.paused}>
   <source src={videoUrl} type="video/mp4">
 </video>
 
