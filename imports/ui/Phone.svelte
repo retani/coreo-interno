@@ -27,20 +27,34 @@
 {sessionId}
 {JSON.stringify(session)}-->
 
-<button on:click={() => {
-  if (session) {
-    Meteor.call('sessions.update', sessionId, {
-      ...session,
-      paused: !session.paused
-    });
-  }
-}}>
-  {#if session && session.paused}
-    Play
-  {:else}
-    Pause
-  {/if}
-</button>
+{#if session && session.paused}
+  <ol>
+    <li>
+      Put this phone in landscape mode
+    </li>
+    <li>
+      Place it on the palm of your hand and keep it there
+    </li>
+    <li>
+      Press Play:
+      <button on:click={() => {
+        if (session) {
+          Meteor.call('sessions.update', sessionId, {
+            ...session,
+            paused: !session.paused
+          });
+        }
+      }}>
+          {#if session && session.paused}
+            Play
+          {:else}
+            Pause
+          {/if}
+      </button>
+    </li>
+  </ol>
+{/if}
+
 
 <video bind:paused={session.paused}>
   <source src={videoUrl} type="video/mp4">

@@ -3,4 +3,14 @@ body {
   font-family: sans-serif;
   background: black;
   color: white;
+  font-size: 18px;
+}
+
+li {
+  padding-bottom: 1ex;
+}
+
+button {
+  font-size: 100%;
+  padding: 1em;
 }
