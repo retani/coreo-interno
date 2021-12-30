@@ -29,7 +29,7 @@
 
     <form on:submit|preventDefault={handleSubmit}>
       <label>
-        Video Computer (URL):
+        Video Computer (filename):
         <input type="text" bind:value={video1Id} placeholder="cui_synch_test_1_computer_smaller.mp4">
         <br />
         {#if video1Id}
@@ -40,8 +40,8 @@
       </label>
       <br />
       <label>
-        Video Phone (Google Drive Id):
-        <input type="text" bind:value={video2Id} placeholder="cui_synch_test_1_computer_smaller.mp4">
+        Video Phone (filename):
+        <input type="text" bind:value={video2Id} placeholder="cui_synch_test_1_telephone_smaller.mp4">
         <br />
         {#if video2Id}
           <video controls>
