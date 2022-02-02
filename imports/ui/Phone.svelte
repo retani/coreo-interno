@@ -2,15 +2,17 @@
   import { Meteor } from "meteor/meteor";
   import { onMount } from 'svelte';
   import { Sessions } from '../api/sessions.js'
+  import { Jumper } from 'svelte-loading-spinners'
 
   export let videoUrl
   export let sessionId
 
   let session
 
+  Meteor.subscribe('session', sessionId);
+
   onMount(async () => {
     if (sessionId) {
-      Meteor.subscribe('session', sessionId);
       Meteor.call('sessions.update', sessionId, {
         ...session,
         phone: true
@@ -19,6 +21,26 @@
   });
 
   $m: session = Sessions.findOne(sessionId);
+
+  function canplaythrough() {
+    if (session) {
+      Meteor.call('sessions.update', sessionId, {
+        ...session,
+        phoneCanplaythrough: true
+      });
+    }
+  }
+
+  function loadstart() {
+    if (session) {
+      Meteor.call('sessions.update', sessionId, {
+        ...session,
+        phoneLoadstart: true
+      });
+    }
+  }
+
+  $: canPlay = session && session.phoneCanplaythrough && session.computerCanplaythrough;
 
 </script>
 
@@ -36,27 +58,36 @@
       Place it on the palm of your hand and keep it there
     </li>
     <li>
-      Press Play:
-      <button on:click={() => {
-        if (session) {
-          Meteor.call('sessions.update', sessionId, {
-            ...session,
-            paused: !session.paused
-          });
-        }
-      }}>
-          {#if session && session.paused}
-            Play
-          {:else}
-            Pause
-          {/if}
-      </button>
+      {#if canPlay}
+        Press Play:
+        <button on:click={() => {
+          if (session) {
+            Meteor.call('sessions.update', sessionId, {
+              ...session,
+              paused: !session.paused
+            });
+          }
+        }}>
+            {#if session && session.paused}
+              Play
+            {:else}
+              Pause
+            {/if}
+        </button>
+      {:else}
+        <Jumper />
+      {/if}
     </li>
   </ol>
 {/if}
 
 
-<video playsinline bind:paused={session.paused}>
+<video 
+  playsinline 
+  bind:paused={session.paused}
+  on:canplaythrough={canplaythrough}
+  on:loadstart={loadstart}
+  >
   <source src={videoUrl} type="video/mp4">
 </video>
 

@@ -14,3 +14,7 @@ button {
   font-size: 100%;
   padding: 1em;
 }
+
+a, a:hover, a:visited {
+  color: white;
+}

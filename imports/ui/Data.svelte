@@ -26,7 +26,7 @@
   }
   
   onMount(async () => {
-    Meteor.subscribe('tasks');
+    Meteor.subscribe('scenes');
   });
 
 </script>

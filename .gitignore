@@ -1,2 +1,5 @@
 .meteor/local
 node_modules/
+
+public/computer.mp4
+public/phone.mp4

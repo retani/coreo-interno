@@ -31,6 +31,24 @@
     }
   }
 
+  function canplaythrough() {
+    if (session) {
+      Meteor.call('sessions.update', sessionId, {
+        ...session,
+        computerCanplaythrough: true
+      });
+    }
+  }
+
+  function loadstart() {
+    if (session) {
+      Meteor.call('sessions.update', sessionId, {
+        ...session,
+        computerLoadstart: true
+      });
+    }
+  }
+
 </script>
 
 <div class="container">
@@ -39,7 +57,11 @@
   <h1>coreografías para uso interno</h1>
 
   {#if session && session.phone}
-    <video bind:paused={session.paused}>
+    <video 
+        bind:paused={session.paused}
+        on:canplaythrough={canplaythrough}
+        on:loadstart={loadstart}
+      >
         <source src={videoUrl} type='video/mp4'>
     </video>
   {:else}
