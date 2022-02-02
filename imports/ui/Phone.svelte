@@ -40,7 +40,7 @@
     }
   }
 
-  $: canPlay = session && session.phoneCanplaythrough && session.computerCanplaythrough;
+  $: canPlay = session // && session.phoneCanplaythrough && session.computerCanplaythrough;
 
 </script>
 
