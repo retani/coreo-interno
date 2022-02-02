@@ -9,7 +9,7 @@
 
   let session
 
-  Meteor.subscribe('session', sessionId);
+  const sub = Meteor.subscribe('session', sessionId);
 
   onMount(async () => {
     if (sessionId) {
@@ -82,14 +82,16 @@
 {/if}
 
 
-<video 
-  playsinline 
-  bind:paused={session.paused}
-  on:canplaythrough={canplaythrough}
-  on:loadstart={loadstart}
-  >
-  <source src={videoUrl} type="video/mp4">
-</video>
+{#if sub.ready}
+  <video 
+    playsinline 
+    bind:paused={session.paused}
+    on:canplaythrough={canplaythrough}
+    on:loadstart={loadstart}
+    >
+    <source src={videoUrl} type="video/mp4">
+  </video>
+{/if}
 
 <style>
   video {
