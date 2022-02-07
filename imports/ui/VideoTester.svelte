@@ -5,12 +5,18 @@
 
   let paused = true
 
+  let loading = {
+    video: true,
+    PlayerA: true,
+  }
+
   function play() {
     paused = false
   }
 
   function loaded(name) {
-    console.log('loaded', name)
+    console.log('loaded ' + name)
+    loading = {...loading, [name]: false}
   }
 
   // videoUrl = "https://upload.wikimedia.org/wikipedia/commons/a/a4/BBH_gravitational_lensing_of_gw150914.webm"
@@ -18,27 +24,54 @@
 </script>
 
 <div class="container">
-  <video 
-    src={videoUrl} 
-    on:canplaythrough={() => loaded("normal")} 
-    bind:paused={paused}>
-  </video>
-  <PlayerA 
-    src={videoUrl}   
-    on:load={() => loaded("buffered")} 
-    bind:paused={paused}
-  />
+  <a href="/">Home</a>
+  <br />
+  <br />
+
+  <div>
+    <a href={videoUrl}>
+    {videoUrl}
+    </a>
+  </div>
+  
+  <div class="vidcontainer" data-name="video">
+    <video 
+      playsinline
+      preload="metadata"
+      on:canplaythrough={() => loaded("video")} 
+      on:error={(e) => alert("video error")}
+      bind:paused={paused}>
+      <track kind="captions" />
+      <source src={videoUrl} type="video/mp4">
+    </video>
+  </div>
+  
+  <div class="vidcontainer" data-name="PlayerA" class:loading={loading.PlayerA}>
+    <PlayerA 
+      src={videoUrl}   
+      on:load={() => loaded("PlayerA")} 
+      bind:paused={paused}
+    />
+  </div>
+
+  <div>
+    {JSON.stringify(loading)}
+  </div>
+
 </div>
 
 <button on:click={play}>play</button>
 
 <style>
-  .container :global(video){
+  .vidcontainer, .container :global(video) {
     width: 300px;
     height: calc( 300px * 9 / 16 );
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  }
+
+  .vidcontainer:not(.loading) :global(video) {
+    background-color: green;
+  }
+  .vidcontainer.loading :global(video) {
     background-color: white;
     background-position: center;
     background-repeat: no-repeat;

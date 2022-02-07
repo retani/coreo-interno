@@ -7,10 +7,22 @@
 
   const dispatch = createEventDispatcher();
 
+  let percentComplete = 0
+
   let videoElem
 
   onMount(() => {
     var r = new XMLHttpRequest();
+    r.onprogress = function(e) {
+      if (e.lengthComputable) {
+        percentComplete = Math.round((e.loaded / e.total) * 100, 2);
+        //dispatch('progress', {
+        //  loaded: e.loaded,
+        //  total: e.total,
+        //  percent: percentComplete
+        //})
+      }
+    }
     r.onload = function() {
       videoElem.src = URL.createObjectURL(r.response);
       loaded = true
@@ -32,4 +44,12 @@
 
 </script>
 
-<video bind:this={videoElem} bind:paused={paused} />
+Loaded {percentComplete}%
+<video 
+  bind:this={videoElem} 
+  bind:paused={paused}
+  playsinline
+  >
+  <track kind="captions" />
+  <source {src} type="video/mp3">
+</video>
