@@ -5,6 +5,7 @@
     import Setup from './Setup.svelte';
     import Data from './Data.svelte';
     import SessionsInfo from './SessionsInfo.svelte';
+    import VideoTester from './VideoTester.svelte';
 
     router.mode.hash(); // enables hash navigation method
 
@@ -25,6 +26,9 @@
       <a href="/computer">Start on Computer</a>
       <br/>
       <br/>
+      <a href="/test">Video Test</a>
+      <br/>
+      <br/>
       <SessionsInfo />
     </Route>
 
@@ -39,6 +43,10 @@
     <Route path="/phone/:sessionId" let:meta>
       <Phone videoUrl={scene.video2Url} sessionId={meta.params.sessionId}/>
     </Route>
+
+  <Route path="/test">
+    <VideoTester videoUrl={scene.video1Url} />
+  </Route>
 
   {:else}
 
