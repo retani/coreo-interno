@@ -34,7 +34,7 @@
     </a>
   </div>
   
-  <div class="vidcontainer" data-name="video">
+  <!--div class="vidcontainer" data-name="video">
     <video 
       playsinline
       preload="metadata"
@@ -44,7 +44,7 @@
       <track kind="captions" />
       <source src={videoUrl} type="video/mp4">
     </video>
-  </div>
+  </div-->
   
   <div class="vidcontainer" data-name="PlayerA" class:loading={loading.PlayerA}>
     <PlayerA 

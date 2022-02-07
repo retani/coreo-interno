@@ -8,6 +8,7 @@
   const dispatch = createEventDispatcher();
 
   let percentComplete = 0
+  let bytesLoaded = 0
 
   let videoElem
 
@@ -16,6 +17,7 @@
     r.onprogress = function(e) {
       if (e.lengthComputable) {
         percentComplete = Math.round((e.loaded / e.total) * 100, 2);
+        bytesLoaded = e.loaded
         //dispatch('progress', {
         //  loaded: e.loaded,
         //  total: e.total,
@@ -44,7 +46,7 @@
 
 </script>
 
-Loaded {percentComplete}%
+Loaded {percentComplete}% ({(bytesLoaded / (1024*1024)).toFixed(2)} MB)
 <video 
   bind:this={videoElem} 
   bind:paused={paused}
