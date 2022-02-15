@@ -3,20 +3,23 @@
   import { onMount } from 'svelte';
   import { Sessions } from '../api/sessions.js'
   import { Jumper } from 'svelte-loading-spinners'
+  import PlayerA from './PlayerA.svelte'
 
   export let videoUrl
   export let sessionId
 
   let session
+  let canPlay = false
 
   const sub = Meteor.subscribe('session', sessionId);
-
+  
   onMount(async () => {
     if (sessionId) {
       Meteor.call('sessions.update', sessionId, {
         ...session,
         phone: true
       });
+      //loadstart()
     }
   });
 
@@ -40,14 +43,34 @@
     }
   }
 
-  $: canPlay = session // && session.phoneCanplaythrough && session.computerCanplaythrough;
+  function progress(progress) {
+    if (session) {
+      Meteor.call('sessions.update', sessionId, {
+        ...session,
+        phoneProgress: progress.detail
+      });
+    }
+  }
+
+  $: {
+    canPlay = session &&
+      session.phoneCanplaythrough  &&
+      session.computerCanplaythrough
+  }
 
 </script>
 
 <!--
 {videoUrl}
 {sessionId}
-{JSON.stringify(session)}-->
+{JSON.stringify(session)}
+-->
+
+<!--
+{session}
+{session.phoneProgress}
+{session.computerProgress}
+-->
 
 {#if session && session.paused}
   <ol>
@@ -82,19 +105,21 @@
 {/if}
 
 
-{#if sub.ready}
-  <video 
-    playsinline 
-    bind:paused={session.paused}
-    on:canplaythrough={canplaythrough}
-    on:loadstart={loadstart}
-    >
-    <source src={videoUrl} type="video/mp4">
-  </video>
+{#if session}
+  <div class="video">
+    <PlayerA 
+      src={videoUrl} 
+      type='video/mp4'
+      bind:paused={session.paused}
+      on:loaded={canplaythrough}
+      on:progress={progress}
+      on:loadstart={loadstart}
+    />
+  </div>
 {/if}
 
 <style>
-  video {
+  .video {
     width: 100%;
     height: 100%;
     object-fit: contain;

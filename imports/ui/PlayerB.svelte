@@ -1,3 +1,7 @@
+/* download file partially before play */
+
+/* copied code, not working (yet) */
+
 (async () => {
 
   const source = document.createElement( 'video' );

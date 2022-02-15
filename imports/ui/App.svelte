@@ -44,9 +44,9 @@
       <Phone videoUrl={scene.video2Url} sessionId={meta.params.sessionId}/>
     </Route>
 
-  <Route path="/test">
-    <VideoTester videoUrl={scene.video1Url} />
-  </Route>
+    <Route path="/test">
+      <VideoTester videoUrl={scene.video1Url} />
+    </Route>
 
   {:else}
 

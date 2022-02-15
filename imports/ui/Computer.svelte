@@ -3,6 +3,7 @@
   import { Meteor } from "meteor/meteor";
   import { onMount } from 'svelte';
   import { Sessions } from '../api/sessions.js'
+  import PlayerA from './PlayerA.svelte'
   import QrCode from "svelte-qrcode"
 
   export let videoUrl
@@ -49,26 +50,31 @@
     }
   }
 
+  function progress(progress) {
+    if (session) {
+      Meteor.call('sessions.update', sessionId, {
+        ...session,
+        computerProgress: progress.detail
+      });
+    }
+  }
+
+  onMount(loadstart);
+
 </script>
 
 <div class="container">
-  <!--{JSON.stringify(session)}-->
+  <pre>
+  {JSON.stringify(session, null, 2)}
+  </pre>
 
   <h1>coreografías para uso interno</h1>
 
-  {#if session && session.phone}
-    <video 
-        bind:paused={session.paused}
-        on:canplaythrough={canplaythrough}
-        on:loadstart={loadstart}
-      >
-        <source src={videoUrl} type='video/mp4'>
-    </video>
-  {:else}
   {#if welcome}
     <h2>Welcome to the show. Please get your phone</h2>
     <button on:click={() => welcome = false}>Continue</button>
-    {:else}
+  {:else}
+    {#if session && !session.phone}
     <ol>
       <li>
         Scan the QR code with your phone
@@ -85,12 +91,39 @@
     </ol>
     {/if}
   {/if}
+
+  {#if session}
+    <div class="video" class:withPhone={session.phone}>
+      <PlayerA 
+        src={videoUrl} 
+        type='video/mp4'
+        bind:paused={session.paused}
+        on:loaded={canplaythrough}
+        on:progress={progress}
+        on:loadstart={loadstart}
+      />
+    </div>
+  {/if}
+
 </div>
 
 <style>
-  video {
+  .video {
     width: 100%;
-    height: 100%;
-    object-fit: contain;
+  }
+
+  
+  .video:not(.withPhone) {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  pre {
+    opacity: 0.1;
+    position: fixed;
+    bottom:0;
+    right:0;
+    text-shadow: 0 0 1px #000;
   }
 </style>
