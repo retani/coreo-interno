@@ -11,10 +11,10 @@
       ],
       "AudioList" : [
         {
-          "AudioBitrate" : 160,
+          "AudioBitrate" : 80,
           "AudioEncoder" : "ca_aac",
           "AudioMixdown" : "stereo",
-          "AudioSamplerate" : "auto",
+          "AudioSamplerate" : "48",
           "AudioTrackDRCSlider" : 0,
           "AudioTrackGainSlider" : 0
         }
