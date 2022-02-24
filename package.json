@@ -8,11 +8,11 @@
     "visualize": "meteor --production --extra-packages bundle-visualizer"
   },
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
+    "@babel/runtime": "^7.17.2",
     "meteor-node-stubs": "^1.1.0",
-    "svelte": "3.27.0",
+    "svelte": "^3.46.4",
     "svelte-qrcode": "^1.0.0",
-    "tinro": "^0.6.10"
+    "tinro": "^0.6.12"
   },
   "meteor": {
     "mainModule": {
@@ -23,5 +23,8 @@
   },
   "devDependencies": {
     "svelte-loading-spinners": "^0.1.7"
+  },
+  "engines": {
+    "node": "14"
   }
 }

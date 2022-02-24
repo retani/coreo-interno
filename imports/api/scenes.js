@@ -18,6 +18,8 @@ Meteor.methods({
         //    throw new Meteor.Error('not-authorized');
         //}
 
-        Scenes.upsert({key: scene.key},scene);
+        console.log('scenes.update', scene);
+
+        Scenes.upsert(scene._id,scene);
     },
 });

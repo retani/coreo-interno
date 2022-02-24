@@ -5,23 +5,17 @@
   import { useTracker } from 'meteor/rdb:svelte-meteor-data';
   import { Scenes } from '../api/scenes.js'
 
-  const key = 0
 
-  export let scene = null /*{
-    key: 0,
-    video1Id: null, // "12UBQm1nXeHLT2sClSJUjJ9qLql6czE2V",
-    video2Id: null //"1BUT5eUPGtyTmiz1ZqWjfKI7xKGHGUEUF"
-  }
- */ 
+  export let scenes = null
   let currentUser;
 
   $: currentUser = useTracker(() => Meteor.user());
 
-  const sceneStore = Scenes.find({key}, { sort: { createdAt: -1 } });
+  const sceneStore = Scenes.find({}, { sort: { createdAt: -1 } });
 
   $: {
     if ($sceneStore && $sceneStore.length > 0) {
-      scene = $sceneStore[0];
+      scenes = [...$sceneStore].sort((a, b) => a.key - b.key);
     }
   }
   

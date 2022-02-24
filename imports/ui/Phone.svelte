@@ -5,60 +5,49 @@
   import { Jumper } from 'svelte-loading-spinners'
   import PlayerA from './PlayerA.svelte'
 
-  export let videoUrl
+  export let scenes = null
   export let sessionId
 
   let session
-  let canPlay = false
-
-  const sub = Meteor.subscribe('session', sessionId);
   
   onMount(async () => {
     if (sessionId) {
+      Meteor.subscribe('session', sessionId);
       Meteor.call('sessions.update', sessionId, {
-        ...session,
         phone: true
       });
-      //loadstart()
     }
   });
 
-  $m: session = Sessions.findOne(sessionId);
+  $m: {
+    if (sessionId) {
+      session = Sessions.findOne(sessionId);
+      if (session) {
+        scenes = session.scenes;
+      }
+    }
+  }
 
-  function canplaythrough() {
+
+  function canplaythrough(scene) {
     if (session) {
-      Meteor.call('sessions.update', sessionId, {
-        ...session,
+      Meteor.call('sessions.updateScene', {sessionId, scene}, {
         phoneCanplaythrough: true
       });
     }
   }
 
-  function loadstart() {
+  function progress(scene, progress) {
     if (session) {
-      Meteor.call('sessions.update', sessionId, {
-        ...session,
-        phoneLoadstart: true
-      });
+      // Meteor.call('sessions.updateScene', {sessionId, scene}, {
+      //   phoneProgress: progress.detail
+      // });
     }
-  }
-
-  function progress(progress) {
-    if (session) {
-      Meteor.call('sessions.update', sessionId, {
-        ...session,
-        phoneProgress: progress.detail
-      });
-    }
-  }
-
-  $: {
-    canPlay = session &&
-      session.phoneCanplaythrough  &&
-      session.computerCanplaythrough
   }
 
 </script>
+
+<!--{JSON.stringify(session,null,2)}-->
 
 <!--
 {videoUrl}
@@ -72,7 +61,7 @@
 {session.computerProgress}
 -->
 
-{#if session && session.paused}
+{#if session}
   <ol>
     <li>
       Put this phone in landscape mode
@@ -81,41 +70,42 @@
       Place it on the palm of your hand and keep it there
     </li>
     <li>
-      {#if canPlay}
-        Press Play:
-        <button on:click={() => {
-          if (session) {
-            Meteor.call('sessions.update', sessionId, {
-              ...session,
-              paused: !session.paused
-            });
-          }
-        }}>
-            {#if session && session.paused}
-              Play
-            {:else}
-              Pause
-            {/if}
-        </button>
-      {:else}
-        <Jumper />
-      {/if}
+      Press the play button when ready
     </li>
   </ol>
-{/if}
 
+  {#each scenes as scene}
+    <h4>{scene.key}</h4>
+    <!--{JSON.stringify(scene,null,2)}-->
+    {#if scene.canPlay}
+      Press Play:
+      <button on:click={() => {
+        if (session) {
+          Meteor.call('sessions.updateScene', {sessionId, scene}, {
+            paused: !scene.paused
+          });
+        }}}>
+          {#if scene.paused}
+            Play
+          {:else}
+            Pause
+          {/if}
+      </button>
+    {:else}
+      <Jumper />
+    {/if}
 
-{#if session}
-  <div class="video">
-    <PlayerA 
-      src={videoUrl} 
-      type='video/mp4'
-      bind:paused={session.paused}
-      on:loaded={canplaythrough}
-      on:progress={progress}
-      on:loadstart={loadstart}
-    />
-  </div>
+    <div class="video">
+      <PlayerA 
+        src={scene.video2Url}
+        type='video/mp4'
+      bind:paused={scene.paused}
+      on:loaded={()=>canplaythrough(scene)}
+      on:progress={p=>progress(scene, p)}
+      />
+    </div>
+  {/each}
+
 {/if}
 
 <style>

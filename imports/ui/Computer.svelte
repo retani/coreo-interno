@@ -6,10 +6,9 @@
   import PlayerA from './PlayerA.svelte'
   import QrCode from "svelte-qrcode"
 
-  export let videoUrl
-
   let sessionId
   let session
+  let scenes
   let phoneUrl
   let welcome = true
 
@@ -29,44 +28,36 @@
     if (sessionId) {
       session = Sessions.findOne(sessionId);
       phoneUrl = `${window.location.origin}/#/phone/${sessionId}`
+      if (session) {
+        scenes = session.scenes;
+      }
     }
   }
 
-  function canplaythrough() {
+  function canplaythrough(scene) {
     if (session) {
-      Meteor.call('sessions.update', sessionId, {
-        ...session,
+      Meteor.call('sessions.updateScene', {sessionId, scene}, {
         computerCanplaythrough: true
       });
     }
   }
 
-  function loadstart() {
+  function progress(scene, progress) {
     if (session) {
-      Meteor.call('sessions.update', sessionId, {
-        ...session,
-        computerLoadstart: true
-      });
+      // Meteor.call('sessions.updateScene', {sessionId, scene}, {
+      //   computerProgress: progress.detail
+      // });
     }
   }
-
-  function progress(progress) {
-    if (session) {
-      Meteor.call('sessions.update', sessionId, {
-        ...session,
-        computerProgress: progress.detail
-      });
-    }
-  }
-
-  onMount(loadstart);
 
 </script>
 
 <div class="container">
-  <pre>
-  {JSON.stringify(session, null, 2)}
-  </pre>
+  {#if Meteor.isDevelopment}
+    <pre>
+    {JSON.stringify(session, null, 2)}
+    </pre>
+  {/if}
 
   <h1>coreografías para uso interno</h1>
 
@@ -93,16 +84,20 @@
   {/if}
 
   {#if session}
-    <div class="video" class:withPhone={session.phone}>
-      <PlayerA 
-        src={videoUrl} 
-        type='video/mp4'
-        bind:paused={session.paused}
-        on:loaded={canplaythrough}
-        on:progress={progress}
-        on:loadstart={loadstart}
-      />
-    </div>
+
+    {#each scenes as scene}
+      <h4>{scene.key}</h4>
+      <!--{JSON.stringify(scene,null,2)}-->
+      <div class="video" class:withPhone={session.phone}>
+        <PlayerA 
+          src={scene.video1Url} 
+          type='video/mp4'
+          bind:paused={scene.paused}
+          on:loaded={()=>canplaythrough(scene)}
+          on:progress={p=>progress(scene, p)}
+        />
+      </div>
+    {/each}
   {/if}
 
 </div>
@@ -120,10 +115,12 @@
   }
 
   pre {
-    opacity: 0.1;
+    opacity: 0.3;
+    font-size: 65%;
     position: fixed;
     bottom:0;
     right:0;
+    z-index: 1;
     text-shadow: 0 0 1px #000;
   }
 </style>

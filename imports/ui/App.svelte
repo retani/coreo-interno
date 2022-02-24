@@ -9,15 +9,17 @@
 
     router.mode.hash(); // enables hash navigation method
 
-    let scene 
+    let scenes
 
 </script>
 
-<Data bind:scene={scene}>
+<Data bind:scenes={scenes}>
 
-  <!--{JSON.stringify(scene)}-->
+  <!--div style="word-wrap: break-word; font-size:70%; white-space: pre;">
+    {JSON.stringify(scenes,null,2)}
+  </div-->
 
-  {#if scene}
+  {#if scenes}
 
     <Route path="/">
       <a href="/setup">Setup</a>
@@ -33,15 +35,15 @@
     </Route>
 
     <Route path="/computer">
-      <Computer videoUrl={scene.video1Url}/>
+      <Computer {scenes}/>
     </Route>
 
     <Route path="/setup">
-      <Setup {scene} />
+      <Setup {scenes} />
     </Route>
 
     <Route path="/phone/:sessionId" let:meta>
-      <Phone videoUrl={scene.video2Url} sessionId={meta.params.sessionId}/>
+      <Phone {scenes} sessionId={meta.params.sessionId}/>
     </Route>
 
     <Route path="/test">
