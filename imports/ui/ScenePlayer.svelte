@@ -70,6 +70,7 @@
     background-image:url(/couple.gif);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
     position: relative;
   }
   .video-inner {
