@@ -18,6 +18,9 @@
 
   onMount(() => {
     var r = new XMLHttpRequest();
+    r.onerror = (e) => {
+      console.warn(e)
+    }
     r.onprogress = function(e) {
       if (e.lengthComputable) {
         const p = Math.round((e.loaded / e.total) * 100, 2);
