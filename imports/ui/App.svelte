@@ -47,7 +47,7 @@
     </Route>
 
     <Route path="/test">
-      <VideoTester videoUrl={scene.video1Url} />
+      <VideoTester videoUrl={scenes[0].video1Url} />
     </Route>
 
   {:else}
