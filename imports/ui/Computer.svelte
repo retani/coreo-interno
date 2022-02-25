@@ -5,6 +5,7 @@
   import { Sessions } from '../api/sessions.js'
   import PlayerA from './PlayerA.svelte'
   import QrCode from "svelte-qrcode"
+  import ScenePlayer from './ScenePlayer.svelte';
 
   let sessionId
   let session
@@ -31,22 +32,6 @@
       if (session) {
         scenes = session.scenes;
       }
-    }
-  }
-
-  function canplaythrough(scene) {
-    if (session) {
-      Meteor.call('sessions.updateScene', {sessionId, scene}, {
-        computerCanplaythrough: true
-      });
-    }
-  }
-
-  function progress(scene, progress) {
-    if (session) {
-      // Meteor.call('sessions.updateScene', {sessionId, scene}, {
-      //   computerProgress: progress.detail
-      // });
     }
   }
 
@@ -86,27 +71,17 @@
   {#if session}
 
     {#each scenes as scene}
-      <h4>{scene.key}</h4>
-      <!--{JSON.stringify(scene,null,2)}-->
-      <div class="video" class:withPhone={session.phone}>
-        <PlayerA 
-          src={scene.video1Url} 
-          type='video/mp4'
-          bind:paused={scene.paused}
-          on:loaded={()=>canplaythrough(scene)}
-          on:progress={p=>progress(scene, p)}
-        />
-      </div>
+      <ScenePlayer 
+        {sessionId}
+        {scene} 
+        place="computer" 
+      />
     {/each}
   {/if}
 
 </div>
 
 <style>
-  .video {
-    width: 100%;
-  }
-
   
   .video:not(.withPhone) {
     position: absolute;

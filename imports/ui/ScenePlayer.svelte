@@ -1,0 +1,85 @@
+<script>
+  import PlayerA from './PlayerA.svelte'
+  import { Meteor } from "meteor/meteor";
+
+  export let sessionId
+  export let scene
+  export let place
+  export let controls = false
+
+  function canplaythrough(scene) {
+    Meteor.call('sessions.updateScene', {sessionId, scene}, {
+      [place + "Canplaythrough"]: true
+    });
+  }
+
+  function ended(scene) {
+    Meteor.call('sessions.updateScene', {sessionId, scene}, {
+      [place + "Ended"]: true,
+      paused: true
+    });
+  }
+
+  function progress(scene, progress) {
+    // Meteor.call('sessions.updateScene', {sessionId, scene}, {
+    //   phoneProgress: progress.detail
+    // });
+  }
+</script>
+
+<h4>Scene #{scene.key+1}</h4>
+<!--{JSON.stringify(scene,null,2)}-->
+<div class="video">
+  <div 
+    class="video-inner"
+    class:loading={!scene.computerCanplaythrough || !scene.phoneCanplaythrough}
+    class:playButton={scene.paused && scene.computerCanplaythrough && scene.phoneCanplaythrough && controls}
+    on:click={()=>{
+      if (controls){
+        Meteor.call('sessions.updateScene', {sessionId, scene}, {
+          paused: !scene.paused
+        });
+      }
+    }}
+  >
+    <PlayerA 
+      src={scene.video2Url}
+      type='video/mp4'
+    bind:paused={scene.paused}
+    on:loaded={()=>canplaythrough(scene)}
+    on:progress={p=>progress(scene, p)}
+    on:ended={()=>ended(scene)}
+    />
+  </div>
+</div>
+
+<style>
+  .video {
+    overflow: hidden;
+    height: 0;
+    padding-top: 56.25%;
+    background-image:url(/couple.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+  }
+  .video-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .video-inner.playButton::after {
+    content: "▶️";
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18vmin;
+  }
+  .video-inner.loading {
+    visibility: hidden;
+  } 
+</style>

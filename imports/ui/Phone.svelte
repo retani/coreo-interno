@@ -2,8 +2,7 @@
   import { Meteor } from "meteor/meteor";
   import { onMount } from 'svelte';
   import { Sessions } from '../api/sessions.js'
-  import { Jumper } from 'svelte-loading-spinners'
-  import PlayerA from './PlayerA.svelte'
+  import ScenePlayer from './ScenePlayer.svelte';
 
   export let scenes = null
   export let sessionId
@@ -25,23 +24,6 @@
       if (session) {
         scenes = session.scenes;
       }
-    }
-  }
-
-
-  function canplaythrough(scene) {
-    if (session) {
-      Meteor.call('sessions.updateScene', {sessionId, scene}, {
-        phoneCanplaythrough: true
-      });
-    }
-  }
-
-  function progress(scene, progress) {
-    if (session) {
-      // Meteor.call('sessions.updateScene', {sessionId, scene}, {
-      //   phoneProgress: progress.detail
-      // });
     }
   }
 
@@ -75,43 +57,13 @@
   </ol>
 
   {#each scenes as scene}
-    <h4>{scene.key}</h4>
-    <!--{JSON.stringify(scene,null,2)}-->
-    {#if scene.canPlay}
-      Press Play:
-      <button on:click={() => {
-        if (session) {
-          Meteor.call('sessions.updateScene', {sessionId, scene}, {
-            paused: !scene.paused
-          });
-        }}}>
-          {#if scene.paused}
-            Play
-          {:else}
-            Pause
-          {/if}
-      </button>
-    {:else}
-      <Jumper />
-    {/if}
-
-    <div class="video">
-      <PlayerA 
-        src={scene.video2Url}
-        type='video/mp4'
-      bind:paused={scene.paused}
-      on:loaded={()=>canplaythrough(scene)}
-      on:progress={p=>progress(scene, p)}
-      />
-    </div>
+    <ScenePlayer 
+      {sessionId}
+      {scene} 
+      place="phone" 
+      controls
+    />
   {/each}
 
 {/if}
 
-<style>
-  .video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-</style>

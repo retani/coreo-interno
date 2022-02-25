@@ -16,40 +16,44 @@ if (Meteor.isServer) {
     });
 }
 
-Meteor.methods({
-    'sessions.init'() {
-            const sessionId = Sessions.insert({
-            createdAt: new Date(),
-            paused: true,
-            scenes: Scenes.find().fetch().map(scene => ({...scene, paused: true})),
-        });
-        console.log('sessions.init', sessionId);
-        return sessionId;
-    },
-    'sessions.update'(sessionId, data) {
-        let set = {};
-        Object.entries(data).forEach(([key, value]) => {
-            set[key] = value;
-        });
-        Sessions.update(sessionId, {
-            $set: set
-        });
-    },
-    'sessions.updateScene'({sessionId, scene}, data) {
-        let set = {};
-        Object.entries(data).forEach(([key, value]) => {
-            set[`scenes.$.${key}`] = value;
-        });
-        const res = Sessions.update({
-            _id: sessionId,
-            "scenes._id": scene._id
-        }, {
-            $set: set
-        });
-    }
-});
+if (Meteor.isServer) { // disable optimistic ui for this collection
+    Meteor.methods({
+        'sessions.init'() {
+                const sessionId = Sessions.insert({
+                createdAt: new Date(),
+                paused: true,
+                scenes: Scenes.find().fetch().map(scene => ({...scene, paused: true})),
+            });
+            console.log('sessions.init', sessionId);
+            return sessionId;
+        },
+        'sessions.update'(sessionId, data) {
+            let set = {};
+            Object.entries(data).forEach(([key, value]) => {
+                set[key] = value;
+            });
+            Sessions.update(sessionId, {
+                $set: set
+            });
+        },
+        'sessions.updateScene'({sessionId, scene}, data) {
+            console.log('sessions.updateScene', scene, data);
+            let set = {};
+            Object.entries(data).forEach(([key, value]) => {
+                set[`scenes.$.${key}`] = value;
+            });
+            const res = Sessions.update({
+                _id: sessionId,
+                "scenes._id": scene._id
+            }, {
+                $set: set
+            });
+        }
+    });
+}
 
 export const checkSessions = () => {
+    /*
     const sessions = Sessions.find().fetch()
     //console.log('checkSessions', sessions.length)
     for (let session of sessions) {
@@ -62,6 +66,11 @@ export const checkSessions = () => {
             }
         }
     }
+    */
+
+    // states:
+    //  - preload
+    //  - active
 }
 
 export const cleanSessions = () => {

@@ -65,6 +65,7 @@
   <video 
     bind:this={videoElem} 
     bind:paused={paused}
+    on:ended
     playsinline
     >
     <track kind="captions" />
