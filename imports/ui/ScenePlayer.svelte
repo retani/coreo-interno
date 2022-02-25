@@ -74,6 +74,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    background-color:white;
     position: relative;
   }
   .video-inner {

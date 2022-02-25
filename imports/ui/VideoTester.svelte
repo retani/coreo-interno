@@ -86,6 +86,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    background-color: red;
     position: relative;
   }
   .video:not(.loading) {
