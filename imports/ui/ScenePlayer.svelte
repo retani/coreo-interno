@@ -1,5 +1,5 @@
 <script>
-  import PlayerA from './PlayerA.svelte'
+  import Player from './PlayerA.svelte'
   import { Meteor } from "meteor/meteor";
 
   export let sessionId
@@ -49,8 +49,8 @@
       }}
     >
     <div class="video-inner">
-      <PlayerA 
-        src={scene.video2Url}
+      <Player
+        src={place == "computer" ? scene.video1Url : scene.video2Url}
         type='video/mp4'
         {muted}
         bind:paused={scene.paused}
