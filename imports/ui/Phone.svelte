@@ -57,12 +57,14 @@
   </ol>
 
   {#each scenes as scene}
-    <ScenePlayer 
-      {sessionId}
-      {scene} 
-      place="phone" 
-      controls
-    />
+    {#if session.currentScene === scene.key}
+      <ScenePlayer 
+        {sessionId}
+        {scene} 
+        place="phone" 
+        controls
+      />
+    {/if}
   {/each}
 
 {/if}

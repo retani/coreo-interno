@@ -5,6 +5,7 @@
   export let sessionId
   export let scene
   export let place
+  export let hidden = false
   export let controls = false
 
   function canplaythrough(scene) {
@@ -15,8 +16,11 @@
 
   function ended(scene) {
     Meteor.call('sessions.updateScene', {sessionId, scene}, {
-      [place + "Ended"]: true,
+      //[place + "Ended"]: true,
       paused: true
+    });
+    Meteor.call('sessions.update', sessionId, {
+      currentScene: scene.key+1
     });
   }
 
@@ -27,33 +31,38 @@
   }
 </script>
 
-<h4>Scene #{scene.key+1}</h4>
-<!--{JSON.stringify(scene,null,2)}-->
-<div class="video">
-  <div 
-    class="video-inner"
-    class:loading={!scene.computerCanplaythrough || !scene.phoneCanplaythrough}
-    class:playButton={scene.paused && scene.computerCanplaythrough && scene.phoneCanplaythrough && controls}
-    on:click={()=>{
-      if (controls){
-        Meteor.call('sessions.updateScene', {sessionId, scene}, {
-          paused: !scene.paused
-        });
-      }
-    }}
-  >
-    <PlayerA 
-      src={scene.video2Url}
-      type='video/mp4'
-    bind:paused={scene.paused}
-    on:loaded={()=>canplaythrough(scene)}
-    on:progress={p=>progress(scene, p)}
-    on:ended={()=>ended(scene)}
-    />
+<div class:hidden class="container">
+  <h4>Scene #{scene.key+1}</h4>
+  <!--{JSON.stringify(scene,null,2)}-->
+  <div class="video">
+    <div 
+      class="video-inner"
+      class:loading={!scene.computerCanplaythrough || !scene.phoneCanplaythrough}
+      class:playButton={scene.paused && scene.computerCanplaythrough && scene.phoneCanplaythrough && controls}
+      on:click={()=>{
+        if (controls){
+          Meteor.call('sessions.updateScene', {sessionId, scene}, {
+            paused: !scene.paused
+          });
+        }
+      }}
+    >
+      <PlayerA 
+        src={scene.video2Url}
+        type='video/mp4'
+      bind:paused={scene.paused}
+      on:loaded={()=>canplaythrough(scene)}
+      on:progress={p=>progress(scene, p)}
+      on:ended={()=>ended(scene)}
+      />
+    </div>
   </div>
 </div>
 
 <style>
+  .container.hidden {
+    display: none;
+  }
   .video {
     overflow: hidden;
     height: 0;

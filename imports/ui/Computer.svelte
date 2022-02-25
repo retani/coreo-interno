@@ -3,7 +3,6 @@
   import { Meteor } from "meteor/meteor";
   import { onMount } from 'svelte';
   import { Sessions } from '../api/sessions.js'
-  import PlayerA from './PlayerA.svelte'
   import QrCode from "svelte-qrcode"
   import ScenePlayer from './ScenePlayer.svelte';
 
@@ -71,11 +70,19 @@
   {#if session}
 
     {#each scenes as scene}
-      <ScenePlayer 
-        {sessionId}
-        {scene} 
-        place="computer" 
-      />
+      {#if session.currentScene === scene.key || (
+          session.currentScene > 0 && 
+          session.currentScene+1 === scene.key && 
+          scenes.find(s=>s.key==scene.key-1).phoneCanplaythrough &&
+          scenes.find(s=>s.key==scene.key-1).computerCanplaythrough
+        )}
+        <ScenePlayer 
+          {sessionId}
+          {scene} 
+          place="computer" 
+          hidden={session.currentScene+1 === scene.key || !session.phone}
+        />
+      {/if}
     {/each}
   {/if}
 

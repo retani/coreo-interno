@@ -22,6 +22,7 @@ if (Meteor.isServer) { // disable optimistic ui for this collection
                 const sessionId = Sessions.insert({
                 createdAt: new Date(),
                 paused: true,
+                currentScene: 0,
                 scenes: Scenes.find().fetch().map(scene => ({...scene, paused: true})),
             });
             console.log('sessions.init', sessionId);
@@ -37,7 +38,7 @@ if (Meteor.isServer) { // disable optimistic ui for this collection
             });
         },
         'sessions.updateScene'({sessionId, scene}, data) {
-            console.log('sessions.updateScene', scene, data);
+            //console.log('sessions.updateScene', scene, data);
             let set = {};
             Object.entries(data).forEach(([key, value]) => {
                 set[`scenes.$.${key}`] = value;
