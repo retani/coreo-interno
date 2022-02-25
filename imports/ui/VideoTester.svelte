@@ -51,10 +51,10 @@
     </video>
   </div-->
   
-  <div class="video">
+  <div class="video" class:loading={!loading.loaded_PlayerA}>
     <div 
       class="video-inner"
-      data-name="PlayerA" class:playing={!paused} class:loading={loading.PlayerA}
+      data-name="PlayerA" class:playing={!paused} 
     >
       <PlayerA 
         src={videoUrl}   
@@ -67,7 +67,7 @@
   </div>
 
   <div>
-    {JSON.stringify(loading)}
+    {JSON.stringify(loading,null,2)}
   </div>
 
 </div>
@@ -77,14 +77,20 @@
 <style>
 
   .video {
+    width: 300px;
     overflow: hidden;
     height: 0;
-    padding-top: 56.25%;
+    height: calc(300px * 9 / 16);
+    outline: 1px solid #ccc;
     background-image:url(/couple.gif);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
     position: relative;
+  }
+  .video:not(.loading) {
+    background-image:none;
+    background-color: lime;
   }
   .video-inner {
     position: absolute;

@@ -62,6 +62,7 @@
         {sessionId}
         {scene} 
         place="phone" 
+        muted
         controls
       />
     {/if}

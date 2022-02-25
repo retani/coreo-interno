@@ -5,6 +5,7 @@
   export let sessionId
   export let scene
   export let place
+  export let muted = false
   export let hidden = false
   export let controls = false
 
@@ -34,12 +35,12 @@
 <div class:hidden class="container">
   <h4>Scene #{scene.key+1}</h4>
   <!--{JSON.stringify(scene,null,2)}-->
-  <div class="video">
-    <div 
-      class="video-inner"
-      class:loading={!scene.computerCanplaythrough || !scene.phoneCanplaythrough}
-      class:playButton={scene.paused && scene.computerCanplaythrough && scene.phoneCanplaythrough && controls}
-      on:click={()=>{
+  <div 
+    class="video"
+    class:loading={!scene.computerCanplaythrough || !scene.phoneCanplaythrough}
+    class:paused={scene.paused}
+    class:playButton={scene.paused && scene.computerCanplaythrough && scene.phoneCanplaythrough && controls}
+    on:click={()=>{
         if (controls){
           Meteor.call('sessions.updateScene', {sessionId, scene}, {
             paused: !scene.paused
@@ -47,13 +48,15 @@
         }
       }}
     >
+    <div class="video-inner">
       <PlayerA 
         src={scene.video2Url}
         type='video/mp4'
-      bind:paused={scene.paused}
-      on:loaded={()=>canplaythrough(scene)}
-      on:progress={p=>progress(scene, p)}
-      on:ended={()=>ended(scene)}
+        {muted}
+        bind:paused={scene.paused}
+        on:loaded={()=>canplaythrough(scene)}
+        on:progress={p=>progress(scene, p)}
+        on:ended={()=>ended(scene)}
       />
     </div>
   </div>
@@ -80,7 +83,7 @@
     width: 100%;
     height: 100%;
   }
-  .video-inner.playButton::after {
+  .video.playButton::after {
     content: "▶️";
     cursor: pointer;
     position: absolute;
@@ -89,7 +92,13 @@
     transform: translate(-50%, -50%);
     font-size: 18vmin;
   }
-  .video-inner.loading {
+  .video.loading .video-inner, 
+  .video.paused .video-inner {
     visibility: hidden;
   } 
+
+  .video:not(.loading) {
+    background-image:none;
+    background-color: grey;
+  }
 </style>

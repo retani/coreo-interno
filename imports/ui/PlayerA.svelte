@@ -4,7 +4,8 @@
   import { onMount, createEventDispatcher } from 'svelte'
 
   export let src 
-  export let type = "video/mp3"
+  export let type = "video/mp4"
+  export let muted = false
   export let loaded = false
   export let paused = true
 
@@ -69,6 +70,7 @@
     bind:this={videoElem} 
     bind:paused={paused}
     on:ended
+    {muted}
     playsinline
     >
     <track kind="captions" />
