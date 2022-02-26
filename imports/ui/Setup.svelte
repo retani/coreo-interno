@@ -13,8 +13,6 @@
 
 
 <div class="container">
-  <a href="/">Home</a>
-
   
   <h1>coreografías uso interno</h1>
 

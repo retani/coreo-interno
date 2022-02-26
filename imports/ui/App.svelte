@@ -21,30 +21,35 @@
 
   {#if scenes}
 
-
     <Route path="/">
       <Computer {scenes}/>
     </Route>
 
-    <Route path="/admin/*">
+    <Route path="/setup/*">
       <Route path="/">
-        <a href="/admin/setup">Setup</a>
+        <a href="/setup/scenes">Setup</a>
         <br/>
         <br/>
         <a href="/">Start on Computer</a>
         <br/>
         <br/>
-        <a href="/test">Video Test</a>
+        <a href="/setup/test">Video Test</a>
         <br/>
         <br/>
         <SessionsInfo />
       </Route>
 
-      <Route path="/setup">
+      <Route path="/scenes">
+        <a href="/setup">
+          &lt; back to setup<br>
+        </a>
         <Setup {scenes} />
       </Route>
 
       <Route path="/test">
+        <a href="/setup">
+          &lt; back to setup<br>
+        </a>
         <VideoTester videoUrl={scenes[0].video1Url} />
       </Route>
 

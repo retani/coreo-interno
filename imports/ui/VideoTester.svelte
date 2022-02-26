@@ -29,9 +29,6 @@
 </script>
 
 <div class="container">
-  <a href="/">Home</a>
-  <br />
-  <br />
 
   <div>
     <a href={videoUrl}>
