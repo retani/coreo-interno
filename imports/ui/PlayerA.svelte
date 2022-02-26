@@ -80,6 +80,7 @@
     bind:this={videoElem} 
     bind:paused={paused}
     on:ended
+    on:playing
     {muted}
     playsinline
     >
