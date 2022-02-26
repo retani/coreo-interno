@@ -18,12 +18,29 @@
   {#each sessions as session}
     <li>
       <dl>
-        {#each Object.entries(session) as [key, val]}
+        <dt>
+          start date
+        </dt>
+        <dd>
+          {session.createdAt}
+        </dd>
+        <dt>
+          current scene
+        </dt>
+        <dd>
+          {session.currentScene}
+        </dd>
+        {#each session.scenes as scene}
           <dt>
-            {key}
+            scene {scene.key}
           </dt>
           <dd>
-            {val}
+            {[
+              scene.paused && "paused", 
+              scene.computerCanplaythrough && "PC_loaded",
+              scene.phoneCanplaythrough && "phone_loaded",
+            ].join(", ")}
+            
           </dd>
         {/each}
       </dl>
