@@ -27,7 +27,7 @@ Meteor.methods({
             createdAt: new Date(),
             paused: true,
             currentScene: 0,
-            scenes: Scenes.find().fetch().filter(validateScene).map(scene => ({...scene, paused: true})),
+            scenes: Scenes.find().fetch().filter(validateScene).map((scene, index) => ({...scene, paused: true, key: index})),
         });
         console.log('sessions.init', sessionId);
         return sessionId;
