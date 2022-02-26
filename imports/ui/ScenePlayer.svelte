@@ -9,6 +9,10 @@
   export let hidden = false
   export let controls = false
 
+  const img = place == "computer" ? scene.img1Url : scene.img2Url
+
+  $: loading = !scene.computerCanplaythrough || !scene.phoneCanplaythrough
+
   function canplaythrough(scene) {
     Meteor.call('sessions.updateScene', {sessionId, scene}, {
       [place + "Canplaythrough"]: true
@@ -33,11 +37,14 @@
 </script>
 
 <div class:hidden class="container">
-  <h4>Scene #{scene.key+1}</h4>
-  <!--{JSON.stringify(scene,null,2)}-->
+  {#if scene.title}
+    <h4>{scene.title}</h4>
+  {/if}
+  {JSON.stringify(scene,null,2)}
   <div 
+    style={`--poster: url(${img})`}
     class="video"
-    class:loading={!scene.computerCanplaythrough || !scene.phoneCanplaythrough}
+    class:loading
     class:paused={scene.paused}
     class:playButton={scene.paused && scene.computerCanplaythrough && scene.phoneCanplaythrough && controls}
     on:click={()=>{
@@ -101,7 +108,7 @@
   } 
 
   .video:not(.loading) {
-    background-image:none;
+    background-image: var(--poster);
     background-color: grey;
   }
 </style>

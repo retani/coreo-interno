@@ -18,6 +18,9 @@ export function getCloudCmdIdFromUrl(url) {
 
 
 export const sceneTemplate = {
+  title: "Scene",
   video1Url: googleDriveIdToUrl("timer_example_3s.mp4"),
-  video2Url: googleDriveIdToUrl("timer_example_3s.mp4")
+  video2Url: googleDriveIdToUrl("timer_example_3s.mp4"),
+  img1Url: googleDriveIdToUrl("timer_example_3s.png"),
+  img2Url: googleDriveIdToUrl("timer_example_3s.png"),
 }
