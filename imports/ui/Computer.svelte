@@ -97,12 +97,16 @@
   }
 
   pre {
-    opacity: 0.3;
-    font-size: 65%;
+    font-size: 1.3vmin;
     position: fixed;
-    bottom:0;
+    top:0;
     right:0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
     z-index: 1;
-    text-shadow: 0 0 1px #000;
+    color: #0005;
+    text-shadow: 0 0 1px white;
+    pointer-events: none;
   }
 </style>
