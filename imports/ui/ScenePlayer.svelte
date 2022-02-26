@@ -40,7 +40,7 @@
   {#if scene.title}
     <h4>{scene.title}</h4>
   {/if}
-  {JSON.stringify(scene,null,2)}
+  <!--{JSON.stringify(scene,null,2)}-->
   <div 
     style={`--poster: url(${img})`}
     class="video"
@@ -109,6 +109,7 @@
 
   .video:not(.loading) {
     background-image: var(--poster);
+    background-size: cover;
     background-color: grey;
   }
 </style>
