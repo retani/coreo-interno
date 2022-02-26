@@ -5,6 +5,7 @@
   import { Sessions } from '../api/sessions.js'
   import TextWelcome from './texts/Welcome.svelte';
   import TextScan from './texts/Scan.svelte';
+  import Thanks from './texts/Thanks.svelte';
   import QrCode from "svelte-qrcode"
   import ScenePlayer from './ScenePlayer.svelte';
 
@@ -87,12 +88,7 @@
 
 
     {#if session.currentScene > scenes.length-1}
-      <h2>Thank you for your participation</h2>
-      <p>
-        <a href="https://pocimasvisuales.com/#resources">
-          &lt; Continue to resources
-        </a>
-      </p>
+      <Thanks place="computer"/>
     {/if}
 
   {/if}

@@ -4,6 +4,7 @@
   import { Sessions } from '../api/sessions.js'
   import PhoneInstructions from './texts/PhoneInstructions.svelte'
   import ScenePlayer from './ScenePlayer.svelte';
+  import Thanks from './texts/Thanks.svelte';
 
   export let scenes = null
   export let sessionId
@@ -35,7 +36,7 @@
 {#if session}
 
   {#if session.currentScene > scenes.length-1}
-    <h2>Thank you for your participation</h2>
+    <Thanks place="phone"/>
   {:else}
     <PhoneInstructions />
   {/if}
