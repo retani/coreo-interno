@@ -44,6 +44,14 @@
       dispatch('loaded', { loaded: true });
     };
 
+    r.onloadeddata = function() {
+      console.log("onloadeddata")
+    };
+
+    r.onloaded = function() {
+      console.log("onloaded")
+    };
+
     // if (myVid.canPlayType('video/mp4;codecs="avc1.42E01E, mp4a.40.2"')) {
     //     r.open("GET", "slide.mp4");
     // }
@@ -57,6 +65,8 @@
     r.send();
 
     dispatch('loadstart', { loaded: false });
+
+    console.log(videoElem)
   })
 
 </script>
