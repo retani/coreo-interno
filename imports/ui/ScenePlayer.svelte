@@ -85,13 +85,15 @@
     height: 100%;
   }
   .video.playButton::after {
-    content: "▶️";
+    --size: 10vw;
+    content: "";
+    border: var(--size) solid transparent;
+    border-left: calc(2 * var(--size) * 0.866) solid currentColor;
     cursor: pointer;
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 18vmin;
+    left: calc( 50% - var(--size) * 0.6 );
+    transform: translateY(-50%);
   }
   .video.loading .video-inner, 
   .video.paused .video-inner {

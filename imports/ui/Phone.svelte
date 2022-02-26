@@ -2,6 +2,7 @@
   import { Meteor } from "meteor/meteor";
   import { onMount } from 'svelte';
   import { Sessions } from '../api/sessions.js'
+  import PhoneInstructions from './texts/PhoneInstructions.svelte'
   import ScenePlayer from './ScenePlayer.svelte';
 
   export let scenes = null
@@ -48,17 +49,7 @@
   {#if session.currentScene > scenes.length-1}
     <h2>Thank you for your participation</h2>
   {:else}
-    <ol>
-      <li>
-        Put this phone in landscape mode
-      </li>
-      <li>
-        Place it on the palm of your hand and keep it there
-      </li>
-      <li>
-        Press the play button when ready
-      </li>
-    </ol>
+    <PhoneInstructions />
   {/if}
 
   {#each scenes as scene}

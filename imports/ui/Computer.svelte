@@ -3,6 +3,8 @@
   import { Meteor } from "meteor/meteor";
   import { onMount } from 'svelte';
   import { Sessions } from '../api/sessions.js'
+  import TextWelcome from './texts/Welcome.svelte';
+  import TextScan from './texts/Scan.svelte';
   import QrCode from "svelte-qrcode"
   import ScenePlayer from './ScenePlayer.svelte';
 
@@ -34,6 +36,8 @@
     }
   }
 
+  const next = () => welcome = false
+
 </script>
 
 <div class="container">
@@ -43,31 +47,23 @@
     </pre>
   {/if}
 
-  <a href="https://pocimasvisuales.com/#conjuro">
+  <!--a href="https://pocimasvisuales.com/#conjuro">
     &lt; Back to module
-  </a>
-
-  <h1>coreografías para uso interno</h1>
+  </a-->
 
   {#if welcome}
-    <h2>Welcome to the show. Please get your phone</h2>
-    <button on:click={() => welcome = false}>Continue</button>
+
+    <TextWelcome {next} />
+
   {:else}
     {#if session && !session.phone}
-    <ol>
-      <li>
-        Scan the QR code with your phone
+    <TextScan>
+      <a href={phoneUrl} target="_blank">
+        <QrCode value={phoneUrl} />
         <br />
-        <a href={phoneUrl} target="_blank">
-          <QrCode value={phoneUrl} />
-          <br />
-          {phoneUrl}
-        </a>
-      </li>
-      <li>
-        Follow the instructions on the phone
-      </li>
-    </ol>
+        <!--{phoneUrl}-->
+      </a>
+    </TextScan>
     {/if}
   {/if}
 
@@ -105,13 +101,8 @@
 
 <style>
   
-  .video:not(.withPhone) {
-    position: absolute;
-    z-index: -1;
-    opacity: 0;
-  }
-
   pre {
+    display: none;
     font-size: 1.3vmin;
     position: fixed;
     top:0;

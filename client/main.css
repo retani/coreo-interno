@@ -116,8 +116,9 @@
   --font-text: normal 500 1rem "Mali", sans-serif;
 }
 
-body {
+body, button {
   font: var(--font-text);
+  color: var(--theme-color);
   border-color: var(--theme-color);
   outline-color: var(--theme-color);
 }
