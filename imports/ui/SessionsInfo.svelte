@@ -1,6 +1,5 @@
 <script>
   import { Meteor } from "meteor/meteor";
-  import { onMount } from 'svelte';
   import { Sessions } from '../api/sessions.js'
 
   let sessions = [];
@@ -35,11 +34,11 @@
             scene {scene.key}
           </dt>
           <dd>
-            {[
-              scene.paused && "paused", 
+            - {[
+              scene.paused ? "" : "playing", 
               scene.computerCanplaythrough && "PC_loaded",
-              scene.phoneCanplaythrough && "phone_loaded",
-            ].join(", ")}
+              scene.phoneCanplaythrough && "Phone_loaded",
+            ].join(" ")}
             
           </dd>
         {/each}
