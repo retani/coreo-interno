@@ -16,42 +16,45 @@ if (Meteor.isServer) {
     });
 }
 
-if (Meteor.isServer) { // disable optimistic ui for this collection
-    Meteor.methods({
-        'sessions.init'() {
-                const sessionId = Sessions.insert({
-                createdAt: new Date(),
-                paused: true,
-                currentScene: 0,
-                scenes: Scenes.find().fetch().map(scene => ({...scene, paused: true})),
-            });
-            console.log('sessions.init', sessionId);
-            return sessionId;
-        },
-        'sessions.update'(sessionId, data) {
-            let set = {};
-            Object.entries(data).forEach(([key, value]) => {
-                set[key] = value;
-            });
-            Sessions.update(sessionId, {
-                $set: set
-            });
-        },
-        'sessions.updateScene'({sessionId, scene}, data) {
-            //console.log('sessions.updateScene', scene, data);
-            let set = {};
-            Object.entries(data).forEach(([key, value]) => {
-                set[`scenes.$.${key}`] = value;
-            });
-            const res = Sessions.update({
-                _id: sessionId,
-                "scenes._id": scene._id
-            }, {
-                $set: set
-            });
-        }
-    });
-}
+/*
+    if (Meteor.isServer) { // disable optimistic ui for this collection for better sync
+    ^^^ this won't work because a resulting async call on play on the video,
+        which ios safari won't accept
+*/
+Meteor.methods({
+    'sessions.init'() {
+            const sessionId = Sessions.insert({
+            createdAt: new Date(),
+            paused: true,
+            currentScene: 0,
+            scenes: Scenes.find().fetch().map(scene => ({...scene, paused: true})),
+        });
+        console.log('sessions.init', sessionId);
+        return sessionId;
+    },
+    'sessions.update'(sessionId, data) {
+        let set = {};
+        Object.entries(data).forEach(([key, value]) => {
+            set[key] = value;
+        });
+        Sessions.update(sessionId, {
+            $set: set
+        });
+    },
+    'sessions.updateScene'({sessionId, scene}, data) {
+        //console.log('sessions.updateScene', scene, data);
+        let set = {};
+        Object.entries(data).forEach(([key, value]) => {
+            set[`scenes.$.${key}`] = value;
+        });
+        const res = Sessions.update({
+            _id: sessionId,
+            "scenes._id": scene._id
+        }, {
+            $set: set
+        });
+    }
+});
 
 export const checkSessions = () => {
     /*
