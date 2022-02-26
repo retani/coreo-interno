@@ -24,6 +24,12 @@
           {session.createdAt}
         </dd>
         <dt>
+          phone connected
+        </dt>
+        <dd>
+          {session.phone}
+        </dd>
+        <dt>
           current scene
         </dt>
         <dd>
