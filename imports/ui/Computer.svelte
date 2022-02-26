@@ -43,6 +43,10 @@
     </pre>
   {/if}
 
+  <a href="https://pocimasvisuales.com/#conjuro">
+    &lt; Back to module
+  </a>
+
   <h1>coreografías para uso interno</h1>
 
   {#if welcome}
@@ -84,6 +88,17 @@
         />
       {/if}
     {/each}
+
+
+    {#if session.currentScene > scenes.length-1}
+      <h2>Thank you for your participation</h2>
+      <p>
+        <a href="https://pocimasvisuales.com/#resources">
+          &lt; Continue to resources
+        </a>
+      </p>
+    {/if}
+
   {/if}
 
 </div>
