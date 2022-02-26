@@ -21,33 +21,38 @@
 
   {#if scenes}
 
-    <Route path="/">
-      <a href="/setup">Setup</a>
-      <br/>
-      <br/>
-      <a href="/computer">Start on Computer</a>
-      <br/>
-      <br/>
-      <a href="/test">Video Test</a>
-      <br/>
-      <br/>
-      <SessionsInfo />
-    </Route>
 
-    <Route path="/computer">
+    <Route path="/">
       <Computer {scenes}/>
     </Route>
 
-    <Route path="/setup">
-      <Setup {scenes} />
+    <Route path="/admin/*">
+      <Route path="/">
+        <a href="/admin/setup">Setup</a>
+        <br/>
+        <br/>
+        <a href="/">Start on Computer</a>
+        <br/>
+        <br/>
+        <a href="/test">Video Test</a>
+        <br/>
+        <br/>
+        <SessionsInfo />
+      </Route>
+
+      <Route path="/setup">
+        <Setup {scenes} />
+      </Route>
+
+      <Route path="/test">
+        <VideoTester videoUrl={scenes[0].video1Url} />
+      </Route>
+
     </Route>
+
 
     <Route path="/phone/:sessionId" let:meta>
       <Phone {scenes} sessionId={meta.params.sessionId}/>
-    </Route>
-
-    <Route path="/test">
-      <VideoTester videoUrl={scenes[0].video1Url} />
     </Route>
 
   {:else}
