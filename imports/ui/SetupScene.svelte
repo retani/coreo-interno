@@ -13,6 +13,7 @@
   let img1Id = getCloudCmdIdFromUrl(scene.img1Url)
   let img2Id = getCloudCmdIdFromUrl(scene.img2Url)
   let title = scene.title
+  let disabled = scene.disabled
   let sceneNumber = scene.key + 1
 
   $: saved = 
@@ -20,12 +21,14 @@
       scene.video2Url==cloudCmdIdToUrl(video2Id) &&
       scene.img1Url==cloudCmdIdToUrl(img1Id) &&
       scene.img2Url==cloudCmdIdToUrl(img2Id) &&
+      scene.disabled==disabled &&
       scene.title==title
 
   function handleSubmit(event) {
       Meteor.call("scenes.update", {
         ...scene,
         title,
+        disabled,
         img1Url: cloudCmdIdToUrl(img1Id),
         img2Url: cloudCmdIdToUrl(img2Id),
         video1Url: cloudCmdIdToUrl(video1Id),
@@ -41,7 +44,7 @@
   
     <h2>Scene #{sceneNumber}: {title}</h2>
 
-    <form on:submit|preventDefault={handleSubmit}>
+    <form on:submit|preventDefault={handleSubmit} class:disabled>
       <div class="title">
       <h4>Title</h4>
       <input type="text" bind:value={title} placeholder={getCloudCmdIdFromUrl(sceneTemplate.title)}>
@@ -101,11 +104,19 @@
           (not saved)
         {/if}
       </button>
+      <label>
+        &nbsp;&nbsp; Hide this scene: <input type="checkbox" name="disabled" bind:checked={disabled} />
+      </label>
     </form>
     
 </div>
 
 <style>
+
+  .disabled *:not(button:not(:disabled)) {
+    opacity: 0.5;
+  }
+
   .videos {
     display: flex;
     flex-direction: row;
@@ -115,7 +126,7 @@
     background-color: #222;
     padding: 10px;
   }
-  label {
+  .videos label {
     flex: 1;
     background-color: #222;
     display: block;
@@ -125,7 +136,13 @@
     width: 100%;
     outline: 1px white solid;
   }
-  input {
+
+  img {
+    width: 100%;
+    height: auto;
+    outline: 1px white solid;
+  }
+  input[type="text"] {
     width: 100%;
     display: inline-block;
     box-sizing: border-box;

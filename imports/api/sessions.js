@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { Scenes } from './scenes.js';
+import { Scenes, validateScene } from './scenes.js';
 
 export const Sessions = new Mongo.Collection('sessions');
 
@@ -27,7 +27,7 @@ Meteor.methods({
             createdAt: new Date(),
             paused: true,
             currentScene: 0,
-            scenes: Scenes.find().fetch().map(scene => ({...scene, paused: true})),
+            scenes: Scenes.find().fetch().filter(validateScene).map(scene => ({...scene, paused: true})),
         });
         console.log('sessions.init', sessionId);
         return sessionId;

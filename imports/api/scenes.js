@@ -23,3 +23,7 @@ Meteor.methods({
         Scenes.upsert(scene._id,scene);
     },
 });
+
+export const validateScene = (scene) => {
+    return (!scene.disabled)
+}
