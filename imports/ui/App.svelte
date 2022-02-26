@@ -5,6 +5,7 @@
     import Setup from './Setup.svelte';
     import Data from './Data.svelte';
     import SessionsInfo from './SessionsInfo.svelte';
+    import ScenesInfo from './ScenesInfo.svelte';
     import VideoTester from './VideoTester.svelte';
 
     router.mode.hash(); // enables hash navigation method
@@ -37,6 +38,7 @@
         <br/>
         <br/>
         <SessionsInfo />
+        <ScenesInfo />
       </Route>
 
       <Route path="/scenes">
