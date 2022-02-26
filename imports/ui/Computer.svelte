@@ -71,7 +71,7 @@
 
     {#each scenes as scene}
       {#if session.currentScene === scene.key || (
-          session.currentScene > 0 && 
+          //session.currentScene > 0 && 
           session.currentScene+1 === scene.key && 
           scenes.find(s=>s.key==scene.key-1).phoneCanplaythrough &&
           scenes.find(s=>s.key==scene.key-1).computerCanplaythrough

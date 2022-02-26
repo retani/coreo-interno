@@ -32,18 +32,6 @@
 
 <!--{JSON.stringify(session,null,2)}-->
 
-<!--
-{videoUrl}
-{sessionId}
-{JSON.stringify(session)}
--->
-
-<!--
-{session}
-{session.phoneProgress}
-{session.computerProgress}
--->
-
 {#if session}
 
   {#if session.currentScene > scenes.length-1}
@@ -53,11 +41,17 @@
   {/if}
 
   {#each scenes as scene}
-    {#if session.currentScene === scene.key}
+      {#if session.currentScene === scene.key || (
+        // session.currentScene > 0 && 
+        session.currentScene+1 === scene.key && 
+        scenes.find(s=>s.key==scene.key-1).phoneCanplaythrough &&
+        scenes.find(s=>s.key==scene.key-1).computerCanplaythrough
+      )}
       <ScenePlayer 
         {sessionId}
         {scene} 
         place="phone" 
+        hidden={session.currentScene+1 == scene.key}
         muted
         controls
       />

@@ -35,9 +35,9 @@
           </dt>
           <dd>
             - {[
-              scene.paused ? "" : "playing", 
               scene.computerCanplaythrough && "PC_loaded",
               scene.phoneCanplaythrough && "Phone_loaded",
+              scene.paused ? "" : "playing", 
             ].join(" ")}
             
           </dd>
