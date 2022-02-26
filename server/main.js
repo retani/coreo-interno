@@ -22,4 +22,14 @@ Meteor.startup(() => {
     Meteor.setInterval(cleanSessions, 1000 * 60);
   }
 
+  if (Meteor.isServer) {
+    // Listen to incoming HTTP requests, can only be used on the server
+    WebApp.rawConnectHandlers.use(function(req, res, next) {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Headers", "Authorization,Content-Type");
+      return next();
+    });
+  }
+
 });
+
