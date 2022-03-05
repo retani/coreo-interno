@@ -1,5 +1,9 @@
 # coreo-interno
 
+- put `.mp4` and `.png` files into `media/`
+- or set another folder for media files with `COREO_MEDIA_PATH=/abolute/path/to/media`
+- run `meteor`
+
 ## ffmpeg video encoding
 
 - PC: `ffmpeg -i "PC GROUP 2 TAKE 2.mp4" -preset veryslow -g 600 -crf 26 -profile:v main -b:a 48k -pix_fmt yuv420p out-slow-a48k-crf26.mp4`

@@ -3,6 +3,7 @@ import {Scenes} from '../imports/api/scenes.js';
 import { checkSessions, cleanSessions } from '../imports/api/sessions.js';
 import '../imports/api/sessions.js';
 import { sceneTemplate } from '../imports/lib/helpers.js';
+import mediaserver from '../imports/lib/mediaserver.js'
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -29,6 +30,10 @@ Meteor.startup(() => {
       res.setHeader("Access-Control-Allow-Headers", "Authorization,Content-Type");
       return next();
     });
+  }
+
+  if (Meteor.isServer) {
+    mediaserver.start();
   }
 
 });

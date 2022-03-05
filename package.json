@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.2",
+    "express": "^4.17.3",
     "meteor-node-stubs": "^1.1.0",
     "svelte": "^3.46.4",
     "svelte-qrcode": "^1.0.0",
