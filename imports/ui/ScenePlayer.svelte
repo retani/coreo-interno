@@ -59,6 +59,16 @@
 
 </script>
 
+<svelte:head>
+  {#if !paused}
+    <style>
+      body {
+        background-color: black;
+      }
+    </style>
+  {/if}
+</svelte:head>
+
 <div class:hidden class="container" class:vmin>
   {#if scene.title}
     <h4>{scene.title}</h4>
