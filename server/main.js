@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import {Scenes} from '../imports/api/scenes.js';
+import {Texts} from '../imports/api/texts.js';
 import { checkSessions, cleanSessions } from '../imports/api/sessions.js';
 import '../imports/api/sessions.js';
 import { sceneTemplate } from '../imports/lib/helpers.js';
@@ -8,6 +9,7 @@ import mediaserver from '../imports/lib/mediaserver.js'
 Meteor.startup(() => {
   // code to run on server at startup
 
+  // seed scenes
   if (Scenes.find().count() === 0) {
     console.log("seeding scenes");
     Scenes.insert({...sceneTemplate, key: 0});
@@ -16,6 +18,21 @@ Meteor.startup(() => {
     Scenes.insert({...sceneTemplate, key: 3});
     Scenes.insert({...sceneTemplate, key: 4});
     Scenes.insert({...sceneTemplate, key: 5});
+  }
+
+  // seed texts
+  if (Texts.find().count() === 0) {
+    console.log("seeding texts");
+    Texts.insert({
+      _id: "0",
+      key: "headline1",
+      value: "Headline 1",
+    });
+    Texts.insert({
+      _id: "1",
+      key: "headline2",
+      value: "Headline 2",
+    });
   }
 
   if (Meteor.isServer) {

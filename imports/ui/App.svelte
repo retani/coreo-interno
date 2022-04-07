@@ -11,19 +11,20 @@
     router.mode.hash(); // enables hash navigation method
 
     let scenes
+    let texts
 
 </script>
 
-<Data bind:scenes={scenes}>
+<Data bind:scenes={scenes} bind:texts={texts}>
 
   <!--div style="word-wrap: break-word; font-size:70%; white-space: pre;">
     {JSON.stringify(scenes,null,2)}
   </div-->
 
-  {#if scenes}
+  {#if scenes && scenes.length > 0 && texts && texts.length > 0 }
 
     <Route path="/">
-      <Computer {scenes}/>
+      <Computer {scenes} {texts}/>
     </Route>
 
     <Route path="/setup/*">
@@ -45,7 +46,7 @@
         <a href="/setup">
           &lt; back to setup<br>
         </a>
-        <Setup {scenes} />
+        <Setup {scenes} {texts} />
       </Route>
 
       <Route path="/test">

@@ -5,6 +5,7 @@
     cloudCmdIdToUrl,
     sceneTemplate,
   } from '../lib/helpers.js'
+  import SaveButton from './SaveButton.svelte'
 
   export let scene
 
@@ -96,14 +97,9 @@
           {/if}
         </label>
       </div>
-      <button disabled={saved} type="submit">
+      <SaveButton disabled={saved} {saved}>
         Save Scene #{sceneNumber}
-        {#if saved}
-          (saved)
-        {:else}
-          (not saved)
-        {/if}
-      </button>
+      </SaveButton>
       <label>
         &nbsp;&nbsp; Hide this scene: <input type="checkbox" name="disabled" bind:checked={disabled} />
       </label>
