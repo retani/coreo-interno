@@ -8,6 +8,7 @@
   export let muted = false
   export let hidden = false
   export let controls = false
+  export let vmin = false
 
   const img = place == "computer" ? scene.img1Url : scene.img2Url
 
@@ -58,7 +59,7 @@
 
 </script>
 
-<div class:hidden class="container">
+<div class:hidden class="container" class:vmin>
   {#if scene.title}
     <h4>{scene.title}</h4>
   {/if}
@@ -90,6 +91,9 @@
 <style>
   .container.hidden {
     display: none;
+  }
+  .container.vmin {
+    max-width: calc( 100vmin / 0.56 - 30px );
   }
   .video {
     overflow: hidden;

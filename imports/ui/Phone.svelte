@@ -55,6 +55,7 @@
         hidden={session.currentScene+1 == scene.key}
         muted
         controls
+        vmin
       />
     {/if}
   {/each}
