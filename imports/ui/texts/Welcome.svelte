@@ -1,23 +1,32 @@
 <p class="sup">
-Pócima visual 02_estando aquí no estoy estoy<br />
-Escuela de espiritismo tecnológico
+  {headline1}
 </p>
 
 <h1>
-  02.1 Módulo Proxémica virtual
+  {headline2}
 </h1>
 
-<h2>
-El estudio de la distancia entre los seres en el reino virtual.
-</h2>
 
 <p>
-Bienvenida al módulo de Proxémica Virtual, la ciencia que estudia la distancia y proximidad entre los seres en el reino virtual.
+  Antes de continuar verifica
 </p>
-
-<p>
-Requieres de un teléfono celular con lector de código QR, asegúrate de tenerlo a la mano antes de comenzar y de suspender las notificaciones de tus redes sociales.
-</p>
+<ol>
+  <li>
+  Estar viendo esto en tu compu y tener tu teléfono a la mano
+  </li>
+  <li>
+  Usar Firefox fox o Chrome en ambos dispositivos (NO uses Safari)
+  </li>
+  <li>
+  Contar con lector de código QR en tu teléfono
+  </li>
+  <li>
+  Saber poner tu teléfono en rotación horizontal 
+  </li>
+  <li>
+  Estar en un lugar tranquilo, donde puedas sentarte frente a tu computadora a realizar este trabajo
+  </li>
+</ol>
 
 <p class="button">
   <button on:click={next}>COMENZAR</button>
@@ -35,4 +44,10 @@ Requieres de un teléfono celular con lector de código QR, asegúrate de tenerl
 
 <script>
   export let next = () => {}
+
+  export let texts = []
+
+  const headline1 = texts.find(text => text.key === 'headline1').value
+  const headline2 = texts.find(text => text.key === 'headline2').value
+  
 </script>

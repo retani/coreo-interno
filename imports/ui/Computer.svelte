@@ -10,6 +10,8 @@
   import QrCode from "svelte-qrcode"
   import ScenePlayer from './ScenePlayer.svelte';
 
+  export let texts
+
   let sessionId
   let session
   let scenes
@@ -55,7 +57,7 @@
 
   {#if welcome}
 
-    <TextWelcome {next} />
+    <TextWelcome {next} {texts}/>
 
   {:else}
     {#if session && !session.phone}

@@ -1,16 +1,30 @@
-<ol>
+<p>
+  Lee con atención estos detalles técnicos pues son lo que te permitirán abrir un portal de comunicación directa para que tu mente y cuerpo puedan recibir este conocimiento desde lejos. 
+  </p>
+  <p>
+  Ahora tu teléfono y computadora se han aliado para mostrarte varios videos.
+  </p>
+  <ol>
+  <li><b>Tu teléfono mudo</b><br/>
+  mi voz solo se oirá en tu compu, los videos de tu teléfono no tendrán sonido.
+  </li>
   <li>
-    Utiliza el modo de rotación horizontal en tu teléfono y si es posible fíjalo
-    para que no se rote si lo mueves.
+  <b>Recibe abrazos mientras esperas
+  </b><br/>
+
+  cuando los videos hayan terminado de cargarse verás aparecer la ventana del video con la flecha de play, mientras tanto enfócate en recibir abrazos virtuales.
+  Una vez que termines el primer video, se cargará el siguiente, en total serán 4 videos consecutivos.
   </li>
 
   <li>
-    Vamos a realizar un conjuro con tu mente, cuerpo y tecnología a partir de
-    una preparación muy sencilla: <br><br>Coloca el teléfono sobre la palma de tu mano
-    izquierda. Ajústalo para que lo integres a tu cuerpo. Con este conjuro
-    estamos abriendo un portal para que puedas recibir diferentes tipos de
-    presencias.
+  <b>Tu mano conmigo</b><br/>
+  mantén  tu pantalla rotada a modo horizontal y ajusta la mano del video a tu mano para que conformen una sola, apoya tu mano sobre la mesa o en algún lugar de manera cómoda para que no se te canse pues esto tomará varios minutos.
   </li>
 
-  <li>Presiona Play</li>
+  <li>
+  <b>No hay marcha atrás </b><br/>
+
+  una vez que le des play al primer video no podrás pasarlo ni regresar, así que prepara todo para que cuando le des play te sigas de corrido hasta el final.
+  </li>
+
 </ol>
