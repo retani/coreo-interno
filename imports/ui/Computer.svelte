@@ -2,6 +2,7 @@
 <script>
   import { Meteor } from "meteor/meteor";
   import { onMount } from 'svelte';
+  import Clipboard from "svelte-clipboard";
   import { Sessions } from '../api/sessions.js'
   import TextWelcome from './texts/Welcome.svelte';
   import TextScan from './texts/Scan.svelte';
@@ -59,11 +60,18 @@
   {:else}
     {#if session && !session.phone}
     <TextScan>
-      <a href={phoneUrl} target="_blank">
-        <QrCode value={phoneUrl} />
-        <br />
-        <!--{phoneUrl}-->
-      </a>
+      <Clipboard
+        text={phoneUrl}
+        let:copy
+        on:copy={() => {
+          console.log('Copied to clipboard', phoneUrl);
+        }}>
+        <div on:click={copy}>
+          <QrCode value={phoneUrl} />
+          <br />
+          <!--{phoneUrl}-->
+        </div>
+      </Clipboard>
     </TextScan>
     {/if}
   {/if}

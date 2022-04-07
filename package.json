@@ -12,6 +12,7 @@
     "express": "^4.17.3",
     "meteor-node-stubs": "^1.1.0",
     "svelte": "^3.46.4",
+    "svelte-clipboard": "^1.0.0",
     "svelte-qrcode": "^1.0.0",
     "tinro": "^0.6.12"
   },
