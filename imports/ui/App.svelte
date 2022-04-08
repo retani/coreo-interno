@@ -60,7 +60,7 @@
 
 
     <Route path="/phone/:sessionId" let:meta>
-      <Phone {scenes} sessionId={meta.params.sessionId}/>
+      <Phone {scenes} {texts} sessionId={meta.params.sessionId}/>
     </Route>
 
   {:else}

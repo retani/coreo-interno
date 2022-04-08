@@ -1,3 +1,6 @@
+export default {
+  "key": 'PhoneInstructions',
+  "value": `
 <p>
   Lee con atención estos detalles técnicos pues son lo que te permitirán abrir un portal de comunicación directa para que tu mente y cuerpo puedan recibir este conocimiento desde lejos. 
   </p>
@@ -28,3 +31,6 @@
   </li>
 
 </ol>
+
+`
+}

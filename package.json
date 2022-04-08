@@ -24,6 +24,7 @@
     "testModule": "tests/main.js"
   },
   "devDependencies": {
+    "mdsvex": "^0.10.5",
     "svelte-loading-spinners": "^0.1.7"
   },
   "engines": {

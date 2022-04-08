@@ -14,7 +14,6 @@
 
   let saved = true
   $: {
-    console.log(JSON.stringify(texts), JSON.stringify(changedTexts), saved)
     saved = JSON.stringify(texts) === JSON.stringify(changedTexts)
   }
 
@@ -27,7 +26,7 @@
     {#each changedTexts as text}
       <label>
         {text.key}
-        <input type="text" bind:value={text.value} />
+        <textarea bind:value={text.value}></textarea>
       </label>
     {/each}
 
@@ -40,5 +39,12 @@
 <style>
   label {
     display: block;
+  }
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    height: 150px;
+    border: 1px solid #ccc;
+    padding: 10px;
   }
 </style>

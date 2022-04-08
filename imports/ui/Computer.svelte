@@ -4,11 +4,9 @@
   import { onMount } from 'svelte';
   import Clipboard from "svelte-clipboard";
   import { Sessions } from '../api/sessions.js'
-  import TextWelcome from './texts/Welcome.svelte';
-  import TextScan from './texts/Scan.svelte';
-  import Thanks from './texts/Thanks.svelte';
   import QrCode from "svelte-qrcode"
   import ScenePlayer from './ScenePlayer.svelte';
+  import Text from './Text.svelte';
 
   export let texts
 
@@ -57,24 +55,34 @@
 
   {#if welcome}
 
-    <TextWelcome {next} {texts}/>
+    <Text {texts} key="Welcome" />
+    
+    <p class="button">
+      <button on:click={next}>COMENZAR</button>
+    </p>
 
   {:else}
     {#if session && !session.phone}
-    <TextScan>
-      <Clipboard
-        text={phoneUrl}
-        let:copy
-        on:copy={() => {
-          console.log('Copied to clipboard', phoneUrl);
-        }}>
-        <div on:click={copy}>
-          <QrCode value={phoneUrl} />
-          <br />
-          <!--{phoneUrl}-->
-        </div>
-      </Clipboard>
-    </TextScan>
+
+      <Text {texts} key="Scan1" />
+
+      <div class="code">
+        <Clipboard
+          text={phoneUrl}
+          let:copy
+          on:copy={() => {
+            console.log('Copied to clipboard', phoneUrl);
+          }}>
+          <div on:click={copy}>
+            <QrCode value={phoneUrl} />
+            <br />
+            <!--{phoneUrl}-->
+          </div>
+        </Clipboard>
+      </div>
+      
+    <Text {texts} key="Scan2" />
+  
     {/if}
   {/if}
 
@@ -98,7 +106,7 @@
 
 
     {#if session.currentScene > scenes.length-1}
-      <Thanks place="computer"/>
+    <Text {texts} key="ComputerThanks" />
     {/if}
 
   {/if}

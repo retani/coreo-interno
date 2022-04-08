@@ -2,12 +2,12 @@
   import { Meteor } from "meteor/meteor";
   import { onMount } from 'svelte';
   import { Sessions } from '../api/sessions.js'
-  import PhoneInstructions from './texts/PhoneInstructions.svelte'
+  import Text from './Text.svelte';
   import ScenePlayer from './ScenePlayer.svelte';
-  import Thanks from './texts/Thanks.svelte';
 
   export let scenes = null
   export let sessionId
+  export let texts
 
   let session
   
@@ -36,9 +36,9 @@
 {#if session}
 
   {#if session.currentScene > scenes.length-1}
-    <Thanks place="phone"/>
+    <Text {texts} key="PhoneThanks" />
   {:else}
-    <PhoneInstructions />
+    <Text {texts} key="PhoneInstructions" />
   {/if}
 
   {#each scenes as scene}

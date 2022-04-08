@@ -1,11 +1,13 @@
+export default {
+  "key": "Welcome",
+  "value": `
 <p class="sup">
-  {headline1}
+  conjuro de proxémica virtual
 </p>
 
 <h1>
-  {headline2}
+  grillo_conejo_salvia
 </h1>
-
 
 <p>
   Antes de continuar verifica
@@ -51,3 +53,5 @@
   const headline2 = texts.find(text => text.key === 'headline2').value
   
 </script>
+
+`};
