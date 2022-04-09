@@ -2,7 +2,6 @@
 <script>
   import { Meteor } from "meteor/meteor";
   import { onMount } from 'svelte';
-  import Clipboard from "svelte-clipboard";
   import { Sessions } from '../api/sessions.js'
   import QrCode from "svelte-qrcode"
   import ScenePlayer from './ScenePlayer.svelte';
@@ -67,18 +66,9 @@
       <Text {texts} key="Scan1" />
 
       <div class="code">
-        <Clipboard
-          text={phoneUrl}
-          let:copy
-          on:copy={() => {
-            console.log('Copied to clipboard', phoneUrl);
-          }}>
-          <div on:click={copy}>
-            <QrCode value={phoneUrl} />
-            <br />
-            <!--{phoneUrl}-->
-          </div>
-        </Clipboard>
+        <QrCode value={phoneUrl} />
+        <br />
+        <!--{phoneUrl}-->
       </div>
       
     <Text {texts} key="Scan2" />
